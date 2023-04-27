@@ -10,6 +10,9 @@ Complex Tensor Contractions via TGTT. Tranposed with the help of HPTT. Complex m
 ## Usage
 
 ```cpp
+#include <complex>
+#include "ctgtt.hpp"
+
 const complex<double> ALPHA = 1.0;
 const complex<double> BETA = 0.0;
 
