@@ -52,13 +52,6 @@ namespace ctgtt
         this->lengths.push_back(length);
       }
 
-      void merge(IndexBundle *other)
-      {
-        this->labels.insert(this->labels.end(), other->labels.begin(), other->labels.end());
-        this->indices.insert(this->indices.end(), other->indices.begin(), other->indices.end());
-        this->lengths.insert(this->lengths.end(), other->lengths.begin(), other->lengths.end());
-      }
-
       const int size()
       {
         return std::accumulate(this->lengths.begin(), this->lengths.end(), 1, std::multiplies<int>());
