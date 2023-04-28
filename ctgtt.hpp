@@ -10,20 +10,21 @@
 
 namespace ctgtt
 {
-  template <typename T>
-  using Tensor = MArray::marray_view<T>;
+  template <class T>
+  using CTensor = MArray::marray_view<std::complex<T>>;
 
   constexpr MArray::layout COLUMN_MAJOR = MArray::COLUMN_MAJOR;
 
-  void contract(std::complex<double> alpha,
-                const Tensor<std::complex<double>> A, std::string labelsA,
-                const Tensor<std::complex<double>> B, std::string labelsB,
-                std::complex<double> beta,
-                Tensor<std::complex<double>> C, std::string labelsC)
+  template <class T>
+  void contract(std::complex<T> alpha,
+                const CTensor<T> A, std::string labelsA,
+                const CTensor<T> B, std::string labelsB,
+                std::complex<T> beta,
+                CTensor<T> C, std::string labelsC)
   {
     utils::IndexBundle I, pA, pB, J;
     std::vector<int> permA, permB, permC(labelsC.length());
-    std::complex<double> *A_ = nullptr, *B_ = nullptr, *C_ = nullptr;
+    std::complex<T> *A_ = nullptr, *B_ = nullptr, *C_ = nullptr;
 
     // Step 1: Find Index Bundles I, J, P
     utils::find_index_bundles(labelsA, A.lengths(), labelsB, B.lengths(), &I, &pA, &pB, &J);

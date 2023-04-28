@@ -1,5 +1,5 @@
 # CTGTT
-Complex Tensor Contractions via TGTT. Tranposed with the help of HPTT. Complex matrix multiplication achieved with BLIS.
+Complex Tensor Contractions via TGTT. Transposed with the help of HPTT. Complex matrix multiplication is achieved with BLIS.
 
 ## Dependencies 
 
@@ -27,9 +27,9 @@ int main() {
         set data ...
     */
 
-    auto tensorA = ctgtt::Tensor<complex<double>>({d1, d2}, A, ctgtt::COLUMN_MAJOR);
-    auto tensorB = ctgtt::Tensor<complex<double>>({d2, d3}, B, ctgtt::COLUMN_MAJOR);
-    auto tensorC = ctgtt::Tensor<complex<double>>({d1, d3}, C, ctgtt::COLUMN_MAJOR);
+    auto tensorA = ctgtt::CTensor<double>({d1, d2}, A, ctgtt::COLUMN_MAJOR);
+    auto tensorB = ctgtt::CTensor<double>({d2, d3}, B, ctgtt::COLUMN_MAJOR);
+    auto tensorC = ctgtt::CTensor<double>({d1, d3}, C, ctgtt::COLUMN_MAJOR);
 
     ctgtt::contract(ALPHA, tensorA, "ab", tensorB, "cb", BETA, tensorC, "ac");
     return 0;
