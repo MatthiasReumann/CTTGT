@@ -1,9 +1,11 @@
+#pragma once
+
 #include <numeric>
 #include <complex>
 #include <unordered_set>
 #include <stdlib.h>
 #include <string>
-#include "hptt.h"
+#include <hptt.h>
 #include "blis.h"
 #include "marray.hpp"
 

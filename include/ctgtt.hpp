@@ -3,10 +3,8 @@
 #include <unordered_set>
 #include <stdlib.h>
 #include <string>
-#include "utils.hpp"
-#include "hptt.h"
-#include "blis.h"
 #include "marray.hpp"
+#include "utils.hpp"
 
 namespace ctgtt
 {
