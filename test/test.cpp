@@ -7,18 +7,6 @@
 
 using namespace std;
 
-void print_matrix(complex<float> *M, size_t length, size_t cstride, size_t rstride)
-{
-  for (size_t j = 0; j < rstride; j++)
-  {
-    for (size_t i = j; i < length; i += cstride)
-    {
-      cout << M[i] << " ";
-    }
-    cout << endl;
-  }
-}
-
 TEST_CASE("1x1 . 1x1 => 1x1")
 {
   int d1 = 1, d2 = 1, d3 = 1;
@@ -52,6 +40,10 @@ TEST_CASE("1x1 . 1x1 => 1x1")
     REQUIRE(C[0].real() == doctest::Approx(4.348).epsilon(0.001));
     REQUIRE(C[0].imag() == doctest::Approx(4.674).epsilon(0.001));
   }
+
+  free(A);
+  free(B);
+  free(C);
 }
 
 TEST_CASE("2x2 . 1x2 => 1x2")
@@ -110,6 +102,10 @@ TEST_CASE("2x2 . 1x2 => 1x2")
     REQUIRE(C[1].real() == doctest::Approx(1.).epsilon(0.001));
     REQUIRE(C[1].imag() == doctest::Approx(0.).epsilon(0.001));
   }
+
+  free(A);
+  free(B);
+  free(C);
 }
 
 TEST_CASE("2x2 . 2x2 => 2x2")
@@ -195,6 +191,10 @@ TEST_CASE("2x2 . 2x2 => 2x2")
     REQUIRE(C[3].real() == doctest::Approx(-3.7).epsilon(0.001));
     REQUIRE(C[3].imag() == doctest::Approx(0.).epsilon(0.001));
   }
+
+  free(A);
+  free(B);
+  free(C);
 }
 
 TEST_CASE("2x2x2 . 2x2 => 1x2")
@@ -246,4 +246,75 @@ TEST_CASE("2x2x2 . 2x2 => 1x2")
     REQUIRE(C[1].real() == doctest::Approx(-0.5).epsilon(0.001));
     REQUIRE(C[1].imag() == doctest::Approx(-3.8).epsilon(0.001));
   }
+
+  free(A);
+  free(B);
+  free(C);
+}
+
+TEST_CASE("2x2x2 . 2x2 => 2x2")
+{
+  const complex<float> alpha = 1.0;
+  const complex<float> beta = 0.0;
+
+  complex<float> *A = nullptr, *B = nullptr, *C = nullptr;
+  ctgtt::utils::alloc_aligned(&A, 2 * 2 * 2);
+  ctgtt::utils::alloc_aligned(&B, 2 * 2 * 2);
+  ctgtt::utils::alloc_aligned(&C, 2 * 2);
+
+  /*
+    A_0 = (
+      i 0 
+      0 i
+    )
+
+    A_1 = (
+      -i 0 
+      0 -i
+    )
+  */
+
+  A[0] = complex<float>(0., 1.); A[2] = complex<float>(0.);
+  A[1] = complex<float>(0.);     A[3] = complex<float>(0., 1.);
+  
+  A[4] = complex<float>(0., -1.); A[6] = complex<float>(0);
+  A[5] = complex<float>(0.);      A[7] = complex<float>(0., -1.);
+
+  /*
+    B_0 = (
+      .33 1+1i
+      0   0+1i  
+     )
+
+    B_1 = (
+      0      0.47
+      0.7i   0.1337  
+     )
+  */
+
+  B[0] = complex<float>(0.33); B[2] = complex<float>(1., 1.);
+  B[1] = complex<float>(0.);     B[3] = complex<float>(0., 1.);
+  
+  B[4] = complex<float>(0.); B[6] = complex<float>(0.47);
+  B[5] = complex<float>(0.,0.7); B[7] = complex<float>(0.1337);
+
+  auto tensorA = ctgtt::CTensor<float>({2, 2, 2}, A, ctgtt::COLUMN_MAJOR);
+  auto tensorB = ctgtt::CTensor<float>({2, 2, 2}, B, ctgtt::COLUMN_MAJOR);
+  auto tensorC = ctgtt::CTensor<float>({2, 2}, C, ctgtt::COLUMN_MAJOR);
+
+  SUBCASE(""){
+    ctgtt::contract(alpha, tensorA, "abc", tensorB, "cbd", beta, tensorC, "ad");
+    REQUIRE(C[0].real() == doctest::Approx(0.).epsilon(0.001));
+    REQUIRE(C[0].imag() == doctest::Approx(0.33).epsilon(0.001));
+    REQUIRE(C[1].real() == doctest::Approx(0.).epsilon(0.001));
+    REQUIRE(C[1].imag() == doctest::Approx(1.).epsilon(0.001));
+    REQUIRE(C[2].real() == doctest::Approx(0.7).epsilon(0.001));
+    REQUIRE(C[2].imag() == doctest::Approx(0.).epsilon(0.001));
+    REQUIRE(C[3].real() == doctest::Approx(0.0).epsilon(0.001));
+    REQUIRE(C[3].imag() == doctest::Approx(0.3363).epsilon(0.001));
+  }
+
+  free(A);
+  free(B);
+  free(C);
 }
