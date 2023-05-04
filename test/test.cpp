@@ -314,6 +314,30 @@ TEST_CASE("2x2x2 . 2x2 => 2x2")
     REQUIRE(C[3].imag() == doctest::Approx(0.3363).epsilon(0.001));
   }
 
+  SUBCASE(""){
+    ctgtt::contract(alpha, tensorA, "abc", tensorB, "cdb", beta, tensorC, "ad");
+    REQUIRE(C[0].real() == doctest::Approx(0.).epsilon(0.001));
+    REQUIRE(C[0].imag() == doctest::Approx(0.33).epsilon(0.001));
+    REQUIRE(C[1].real() == doctest::Approx(0.7).epsilon(0.001));
+    REQUIRE(C[1].imag() == doctest::Approx(0.).epsilon(0.001));
+    REQUIRE(C[2].real() == doctest::Approx(0.).epsilon(0.001));
+    REQUIRE(C[2].imag() == doctest::Approx(1.).epsilon(0.001));
+    REQUIRE(C[3].real() == doctest::Approx(0.0).epsilon(0.001));
+    REQUIRE(C[3].imag() == doctest::Approx(0.3363).epsilon(0.001));
+  }
+
+  SUBCASE(""){
+    ctgtt::contract(alpha, tensorA, "abc", tensorB, "cdb", beta, tensorC, "da");
+    REQUIRE(C[0].real() == doctest::Approx(0.).epsilon(0.001));
+    REQUIRE(C[0].imag() == doctest::Approx(0.33).epsilon(0.001));
+    REQUIRE(C[1].real() == doctest::Approx(0.).epsilon(0.001));
+    REQUIRE(C[1].imag() == doctest::Approx(1.).epsilon(0.001));
+    REQUIRE(C[2].real() == doctest::Approx(0.7).epsilon(0.001));
+    REQUIRE(C[2].imag() == doctest::Approx(0.).epsilon(0.001));
+    REQUIRE(C[3].real() == doctest::Approx(0.0).epsilon(0.001));
+    REQUIRE(C[3].imag() == doctest::Approx(0.3363).epsilon(0.001));
+  }
+
   free(A);
   free(B);
   free(C);
