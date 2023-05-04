@@ -101,8 +101,11 @@ namespace ctgtt
           I->push_back(labelsA.at(i), i, sizesA[i]);
       }
 
-      for (int j = 0; (j < labelsB.length() && setB.count(labelsB.at(j)) > 0); j++)
-        J->push_back(labelsB.at(j), j, sizesB[j]);
+      for (int j = 0; j < labelsB.length(); j++)
+        if (setB.count(labelsB.at(j)) > 0)
+        {
+          J->push_back(labelsB.at(j), j, sizesB[j]);
+        }
     }
 
     template <typename T, unsigned long NDim>
