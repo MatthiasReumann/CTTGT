@@ -36,7 +36,7 @@ int main()
     }
 
     cout << "TEST: d1="<<d1 << " d2="<<d2 << " d3=" << d3 << endl;
-    cout << "Minimum: " << *std::min_element(time.begin(), time.end()) << " ms" << endl;
-    cout << "Average: " << std::accumulate(time.begin(), time.end(), 0.0) * 1.0 / N << " ms" << endl;
+    cout << "Minimum: " << *min_element(time.begin(), time.end()) << " ms" << endl;
+    cout << "Average: " << accumulate(time.begin(), time.end(), 0.0) * 1.0 / N << " ms" << endl;
   }
 }
