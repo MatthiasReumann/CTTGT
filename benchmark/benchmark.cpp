@@ -9,10 +9,11 @@ const int N = 1000;
 
 int main()
 {
+  complex<double> *A = nullptr, *B = nullptr, *C = nullptr;
 
   for(int i = 0; i < 11; i++) {
     int d1 = pow(2, i), d2 = pow(2, i), d3 = pow(2, i);
-    complex<double> *A = nullptr, *B = nullptr, *C = nullptr;
+    
     ctgtt::utils::alloc_aligned(&A, d1 * d2);
     ctgtt::utils::alloc_aligned(&B, d2 * d3);
     ctgtt::utils::alloc_aligned(&C, d1 * d3);
@@ -38,5 +39,9 @@ int main()
     cout << "TEST: d1="<<d1 << " d2="<<d2 << " d3=" << d3 << endl;
     cout << "Minimum: " << *min_element(time.begin(), time.end()) << " ms" << endl;
     cout << "Average: " << accumulate(time.begin(), time.end(), 0.0) * 1.0 / N << " ms" << endl;
+
+    free(A);
+    free(B);
+    free(C);
   }
 }
