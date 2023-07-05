@@ -1,5 +1,5 @@
-# CTGTT
-Complex Tensor Contractions via TGTT. Transposed with the help of HPTT. Complex matrix multiplication is achieved with BLIS.
+# CTTGT
+Complex Tensor Contractions via TTGT. Transposed with the help of HPTT. Complex matrix multiplication is achieved with BLIS.
 
 ## Dependencies 
 
